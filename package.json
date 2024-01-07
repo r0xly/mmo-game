@@ -1,0 +1,18 @@
+{
+  "name": "mmo-game",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "client-dev": "node live-server.cjs",
+    "server": "node ./server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "live-server": "^1.2.2",
+    "obscenity": "^0.1.4",
+    "sanitize-html": "^2.11.0",
+    "ws": "^8.16.0"
+  }
+}

@@ -1,0 +1,91 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+
+    background-image: url("./assets/background-pattern.png");
+    background-repeat: repeat;
+    image-rendering: pixelated;
+    background-size: 20px;
+}
+
+canvas {
+    background-color: white;
+    image-rendering: pixelated;
+}
+
+.canvas-container {
+    position: relative;
+} 
+
+.chat-window {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    
+    resize: both;
+    overflow: hidden;
+
+    height: 300px;
+    width: 400px;
+    max-height: calc(100% - 50px);
+    max-width: calc(100% - 50px);
+    min-height: 40px;
+    min-width: 200px;
+    transform: rotate(180deg);
+    
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 3px;
+
+    margin: 20px;
+    bottom: 0;
+    right: 0;
+}
+
+
+.chat {
+    display: flex;
+    flex-direction: column-reverse;
+    transform: rotate(180deg);
+    color: white;
+    text-align: left;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 2px;
+    overflow: auto;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.827);
+    border: solid 2px #202020;
+}
+
+.chat p, span {
+    margin: 0;
+    font-family: monospace;
+    size: 3rem;
+    color: #e9e9e9;
+}
+
+.chat-window input {
+    box-sizing: border-box;
+    font-family: monospace;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    transform: rotate(180deg);
+    margin-bottom: 5px;
+    background-color: rgba(0, 0, 0, 0.827);
+    border-radius: 2px;
+    color: #e9e9e9;
+    outline: none;
+    border: solid 2px #202020;
+}
+
+.chat-window input:focus {
+    border: solid 2px #6ca5ff;
+}
