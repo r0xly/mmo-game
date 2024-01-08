@@ -5,13 +5,14 @@ import { Vector } from "../util/vector.js";
 /**
  * @typedef {Object} GameObject
  * @property {{[componentId: string]: Object}} components
+ * @property {Sprite|string|undefined=} renderOverride
  * @property {Vector} positionPivot
  * @property {Vector} rotationPivot
+ * @property {Sprite|string} render
  * @property {number} rotation
  * @property {Vector} position
  * @property {Vector} size
  * @property {number} layer
- * @property {Sprite|string} render
  */
 
 /**

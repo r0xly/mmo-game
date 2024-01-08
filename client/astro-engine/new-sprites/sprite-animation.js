@@ -1,34 +1,113 @@
 /**
- * @typedef {Object} SpriteAnimationData
- * @property {[timePositin: number] : Sprite } keyFrames
- * @property {boolean} playOnCreation
- * @property {number} timeLength
+ * @typedef {{[timestamp: number] : import("../sprites/sprite.js").Sprite}} KeyFrames
+ * 
+*  @typedef {Object} SpriteAnimationData
+ * @property {boolean=} playOnCreation 
+ * @property {number=} playbackSpeed 
+ * @property {KeyFrames} keyFrames 
+ * @property {number} timeLength 
+ * @property {number=} priority 
+ * @property {boolean=} loop 
+ * 
+ * @typedef {Object} SpriteAnimation 
+ * @property {import("../core/gameObject").GameObject[]} gameObjects
+ * @property {number} currentTimestampIndex
+ * @property {number} playbackSpeed 
+ * @property {number} timePosition 
+ * @property {KeyFrames} keyFrames 
+ * @property {string[]} timestamps
+ * @property {number} timeLength 
+ * @property {boolean} playing 
  * @property {number} priority
+ * @property {boolean} loop
  */
 
-
-class SpriteAnimation {
-    constructor(animationData, gameObjects) {
-        this.animationData = animationData;
-        this.gameObjects = gameObjects;
-    }
-    
-    play() {
-
-    }
-
-    stop() {
-
-    }
-}
+import { update } from "../astro.js";
 
 /**
- * @param {SpriteAnimation} animationData 
- * @param  {...import("../core/gameObject").GameObject} gameObjects 
- * @returns 
+ * @type {SpriteAnimation[]}
  */
-export function createSpriteAnimation(animationData, ...gameObjects) {
-    const animation = new SpriteAnimation(animationData, gameObjects);
+const spriteAnimations = [];
+
+/**
+ * @param {SpriteAnimationData} animationData 
+ * @param {...import("../core/gameObject").GameObject} gameObject
+ * @returns {SpriteAnimation} 
+ */
+export function createSpriteAnimation(animationData, ...gameObject) {
+
+    const animation =  {
+        timestamps: Object.keys(animationData.keyFrames),
+        playbackSpeed: animationData.playbackSpeed || 1,
+        playing: animationData.playOnCreation || false,
+        priority: animationData.priority || 0,
+        timeLength: animationData.timeLength,
+        keyFrames: animationData.keyFrames,
+        loop: animationData.loop || false,
+        gameObjects: gameObject,
+        currentTimestampIndex: -1,
+        timePosition: 0,
+    };
+
+    spriteAnimations.push(animation);
 
     return animation;
 }
+
+/**
+ * @param {...SpriteAnimation} spriteAnimation 
+ */
+export function playSpriteAnimation(...spriteAnimation) {
+    spriteAnimation.forEach(animation => animation.playing = true);
+}
+
+/**
+ * @param {...SpriteAnimation} spriteAnimation 
+ */
+export function stopSpriteAnimation(...spriteAnimation) {
+    spriteAnimation.forEach(animation => animation.playing = false);
+}
+
+/**
+ * @param {SpriteAnimation} animation 
+ */
+function resetSpriteAnimation(animation) {
+    animation.playing = animation.loop;
+    animation.timePosition = 0;
+    animation.currentTimestampIndex = 0;
+    
+    animation.gameObjects.forEach(gameObject => {
+        gameObject.renderOverride = undefined;
+    });
+}
+
+/**
+ * @param {SpriteAnimation} animation 
+ */
+function updateSpriteAnimationFrame(animation) {
+    animation.currentTimestampIndex++;
+    animation.gameObjects.forEach(gameObject => 
+        gameObject.renderOverride = animation.keyFrames[animation.timestamps[animation.currentTimestampIndex]]
+    );
+}
+
+/**
+ * @param {SpriteAnimation} animation 
+ * @param {number} deltaTime 
+ */
+function updateSpriteAnimation(animation, deltaTime) {
+    animation.timePosition += deltaTime * animation.playbackSpeed;
+
+    if (animation.timePosition >= animation.timeLength)
+        resetSpriteAnimation(animation);
+    else if (animation.timePosition >= parseFloat(animation.timestamps[animation.currentTimestampIndex + 1]))
+        updateSpriteAnimationFrame(animation);
+        
+}
+
+update(deltaTime => {
+    spriteAnimations.forEach(animation => {
+        if (animation.playing)
+            updateSpriteAnimation(animation, deltaTime);
+    });
+});

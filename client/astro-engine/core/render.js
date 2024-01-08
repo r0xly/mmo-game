@@ -29,7 +29,7 @@ update((deltaTime, canvas, ctx) => {
         ctx.translate(-(originX + objectX), -(originY - objectY))
 
 
-        const renderObject = object.render;
+        const renderObject = object.renderOverride || object.render;
 
         if (renderObject === "rect")
             ctx.fillRect(

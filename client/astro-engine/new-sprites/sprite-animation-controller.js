@@ -1,5 +1,5 @@
 import { update } from "../astro.js";
-import { gameObject } from "../core/gameObject";
+import { gameObject } from "../core/gameObject.js";
 
 export const activeSpriteAnimation = [];
 
@@ -16,15 +16,16 @@ function resetAnimation(animation) {
 }
 
 function updateAnimation(animation, deltaTime) {
-    if (!animation.playing)
-        return;
-    else if (animation.timePosition > animation.timeLength) 
+    if (animation.timePosition > animation.timeLength) 
         return resetAnimation(animation);
 
     animation.timePosition += deltaTime * animation.playbackSpeed;
 }
 
 
-update(deltaTime =>
-    activeSpriteAnimation.forEach(animaton => updateAnimation(animaton, deltaTime))
+update(deltaTime => 
+    activeSpriteAnimation.forEach(animaton => { 
+        if (animaton.playing)
+            updateAnimation(animaton, deltaTime);
+    })
 );
