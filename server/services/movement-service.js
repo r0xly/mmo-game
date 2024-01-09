@@ -10,3 +10,11 @@ messageReciever.on("Move", (player, room, { x, y }) => {
         y: y,
     }, room.players, player);
 });
+
+messageReciever.on("CharacterState", ((player, room, { flip, moving }) => {
+    sendMessage("CharacterState", {
+        id: player.id,
+        flip: flip,
+        moving: moving
+    }, room.players, player);
+}));

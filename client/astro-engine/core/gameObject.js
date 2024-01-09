@@ -13,6 +13,7 @@ import { Vector } from "../util/vector.js";
  * @property {Vector} position
  * @property {Vector} size
  * @property {number} layer
+ * @property {boolean} flipRender
  */
 
 /**
@@ -100,6 +101,7 @@ export function gameObject(properties) {
         size: new Vector(100, 100),
         rotationPivot: Vector.Zero,
         position: Vector.Zero,
+        flipRender: false,
         components: {},
         render: "rect",
         rotation: 0,

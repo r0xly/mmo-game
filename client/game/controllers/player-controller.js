@@ -2,7 +2,7 @@ import { update } from "../../astro-engine/astro.js";
 import { addPosition, deleteObject } from "../../astro-engine/core/gameObject.js";
 import { keyDown, keyUp } from "../../astro-engine/core/input.js";
 import { Vector } from "../../astro-engine/util/vector.js";
-import { createCharacter } from "../entities/character.js";
+import { createCharacter } from "../objects/character.js";
 import { sendMessage } from "./network-controller.js";
 
 export let walkSpeed = 300;
@@ -29,8 +29,18 @@ keyUp(key => {
 });
 
 update(deltaTime => {
+    const characterData = character.components["CharacterData"];
+
+    sendMessage("CharacterState", {
+        flip: characterData.flip,
+        moving: characterData.moving
+    });
+    
     if (!character || moveDirection.magnitude === 0)
-        return;
+        return characterData.moving = false;
+
+    characterData.moving = true;
+    characterData.flip = moveDirection.x < 0;
     
     addPosition(character, moveDirection.unit.mul(walkSpeed * deltaTime));
     sendMessage("Move", { 

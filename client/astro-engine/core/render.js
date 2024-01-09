@@ -1,5 +1,5 @@
 import { update } from "../astro.js";
-import { gameObjects } from "./gameObject.js";
+import { gameObject, gameObjects } from "./gameObject.js";
 import { Sprite } from "../sprites/sprite.js";
 
 export const trash = 0;
@@ -39,7 +39,8 @@ update((deltaTime, canvas, ctx) => {
                 objectHeight,
             )
         else if (renderObject instanceof Sprite) {
-            const direction = renderObject.inverse ? -1 : 1;
+            const flip = renderObject.inverse || object.flipRender;
+            const direction = flip ? -1 : 1;
             const asdfgjkl = (originX - pivotOffsetX + objectX) * direction;
 
             ctx.scale(direction, 1);
@@ -49,7 +50,7 @@ update((deltaTime, canvas, ctx) => {
                 renderObject.sy,
                 renderObject.sWidth,
                 renderObject.sHeight,
-                asdfgjkl - (renderObject.inverse ? objectWidth : 0),
+                asdfgjkl - (flip ? objectWidth : 0),
                 originY - pivotOffsetY - object.position.y,
                 objectWidth,
                 objectHeight,

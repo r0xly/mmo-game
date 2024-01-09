@@ -1,6 +1,6 @@
 import { deleteObject } from "../../astro-engine/core/gameObject.js";
 import { Vector } from "../../astro-engine/util/vector.js";
-import { createCharacter } from "../entities/character.js";
+import { createCharacter } from "../objects/character.js";
 import { messageRecieved } from "./network-controller.js";
 
 const characters = {};
@@ -11,7 +11,7 @@ function clearRoom() {
 }
 
 function addPlayer(player) {
-    characters[player.id] = createCharacter();
+    characters[player.id] = createCharacter(player.x, player.y);
 }
 
 function removePlayer(player) {
@@ -30,6 +30,16 @@ messageRecieved("RoomData", ({ roomId, roomData, players }) =>  {
 messageRecieved("Move", ({ id, x, y }) => {
     if (characters[id])
         characters[id].position = new Vector(x, y);
+});
+
+messageRecieved("CharacterState", ({ id, flip, moving }) => {
+    if (characters[id]) {
+        characters[id].components["CharacterData"].flip = flip;
+        characters[id].components["CharacterData"].moving = moving;
+
+    }
+
+    console.log(flip);
 });
 
 messageRecieved("PlayerJoinedRoom", addPlayer);

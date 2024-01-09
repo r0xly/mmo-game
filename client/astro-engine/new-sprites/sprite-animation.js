@@ -65,7 +65,13 @@ export function playSpriteAnimation(...spriteAnimation) {
  * @param {...SpriteAnimation} spriteAnimation 
  */
 export function stopSpriteAnimation(...spriteAnimation) {
-    spriteAnimation.forEach(animation => animation.playing = false);
+    spriteAnimation.forEach(animation => { 
+        if (!animation.playing)
+            return;
+
+        resetSpriteAnimation(animation)
+        animation.playing = false;
+    });
 }
 
 /**
