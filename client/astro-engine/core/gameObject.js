@@ -54,22 +54,32 @@ export function removeComponent(gameObject, ...componentIds) {
 export function getComponent(gameObject, ...componentIds) {
     let components = [];
 
-    componentIds.forEach(id => {
-        let component = gameObject.components[id]
-
-        if (component)
+    for (const id of componentIds) {
+        let component = gameObject.components[id];
+        
+        if (component) 
             components.push(component);
+    }
 
-
-    })
-
-    return components
+    return components.length === componentIds.length ? components : undefined;
 }
 
 export function queryObjects(...componentIds) {
+    let query = [];
+
+    gameObjects.forEach(object  => {
+        let components = getComponent(object, ...componentIds);
+
+        if (components) 
+            query.push([object, ...components])
+    });
+
+    return query;
+    /** 
     return gameObjects
         .filter(object => getComponent(object, ...componentIds))
         .map(object => [object, ...getComponent(object, ...componentIds)])
+    */
 }
 
 export function addPosition(gameObject, x ,y) {

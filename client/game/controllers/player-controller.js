@@ -5,6 +5,8 @@ import { Vector } from "../../astro-engine/util/vector.js";
 import { createCharacter } from "../objects/character.js";
 import { sendMessage } from "./network-controller.js";
 
+const PLAYER_LAYER = 2;
+
 export let walkSpeed = 300;
 export let moveDirection = Vector.Zero;
 export let character;
@@ -14,6 +16,7 @@ export function loadPlayer() {
         deleteObject(character);
 
     character = createCharacter();
+    character.layer = PLAYER_LAYER;
 }
 
 // player movement
@@ -35,7 +38,7 @@ update(deltaTime => {
         flip: characterData.flip,
         moving: characterData.moving
     });
-    
+
     if (!character || moveDirection.magnitude === 0)
         return characterData.moving = false;
 

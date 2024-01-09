@@ -41,7 +41,6 @@ chatInput.onkeydown = event => {
 
     const content = chatInput.value || " ";
     chatInput.value = "";
-    console.log(content)
 
     sendMessage("ChatMessage", content);
 }

@@ -22,7 +22,6 @@ function removePlayer(player) {
 
 messageRecieved("RoomData", ({ roomId, roomData, players }) =>  {
     clearRoom();
-    console.log(players);
 
     players.forEach(player => addPlayer(player))
 });
@@ -38,8 +37,6 @@ messageRecieved("CharacterState", ({ id, flip, moving }) => {
         characters[id].components["CharacterData"].moving = moving;
 
     }
-
-    console.log(flip);
 });
 
 messageRecieved("PlayerJoinedRoom", addPlayer);

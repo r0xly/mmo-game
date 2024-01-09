@@ -16,6 +16,11 @@ connect(serverUrl);
 startEngine(canvas);
 loadPlayer();
 
+gameObject({
+    size: [928 * 3.2, 448 * 3.2],
+    position: [0, 0],
+    render: new Sprite("./assets/sample-map.png")
+})
 
 window.onresize = event => {
     canvas.width = window.innerWidth; 
