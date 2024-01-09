@@ -1,5 +1,5 @@
 import { addComponent, gameObject } from "../../astro-engine/core/gameObject.js";
-import { createSpriteAnimation, playSpriteAnimation } from "../../astro-engine/new-sprites/sprite-animation.js";
+import { createSpriteAnimation, playSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 import { characterSprites } from "../sprites/character-sprites.js";
 
 const idleAnimationData = {

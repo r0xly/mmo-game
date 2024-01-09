@@ -1,5 +1,5 @@
 /**
- * @typedef {{[timestamp: number] : import("../sprites/sprite.js").Sprite}} KeyFrames
+ * @typedef {{[timestamp: number] : import("./sprite.js").Sprite}} KeyFrames
  * 
 *  @typedef {Object} SpriteAnimationData
  * @property {boolean=} playOnCreation 
@@ -10,7 +10,7 @@
  * @property {boolean=} loop 
  * 
  * @typedef {Object} SpriteAnimation 
- * @property {import("../core/gameObject").GameObject[]} gameObjects
+ * @property {import("../core/gameObject.js").GameObject[]} gameObjects
  * @property {number} currentTimestampIndex
  * @property {number} playbackSpeed 
  * @property {number} timePosition 
@@ -31,7 +31,7 @@ const spriteAnimations = [];
 
 /**
  * @param {SpriteAnimationData} animationData 
- * @param {...import("../core/gameObject").GameObject} gameObject
+ * @param {...import("../core/gameObject.js").GameObject} gameObject
  * @returns {SpriteAnimation} 
  */
 export function createSpriteAnimation(animationData, ...gameObject) {

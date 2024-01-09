@@ -1,6 +1,6 @@
 import { update } from "../../astro-engine/astro.js";
 import { queryObjects } from "../../astro-engine/core/gameObject.js";
-import { playSpriteAnimation, stopSpriteAnimation } from "../../astro-engine/new-sprites/sprite-animation.js";
+import { playSpriteAnimation, stopSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 
 update(deltaTime => {
     queryObjects("CharacterData").forEach(([gameObject, characterData]) => {
