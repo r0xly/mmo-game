@@ -13,15 +13,14 @@ function parseMessage(data) {
 }
 
 /**
- * Handles broadcasting message data. 
  * @type {EventEmitter}
  */
 export const messageReciever = new EventEmitter();
 
 /**
  * Sends a message to one or multiple players.
- * @param {string} id - The identifier for the message.
- * @param {any} data - The data to be sent in the message.
+ * @param {string} id 
+ * @param {any} data 
  * @param {Player|Object} players - The player or players to receive the message.
  * @param {Player=} exclude - The player to exclude from the player list.
  */
@@ -40,8 +39,8 @@ export function sendMessage(id, data, players, exclude) {
 }
 /**
  * Broadcasts a message to all players except the specified one.
- * @param {string} id - The identifier for the message.
- * @param {any} data - The data to be sent in the message.
+ * @param {string} id 
+ * @param {any} data 
  * @param {Player=} exclude - The player to exclude from the broadcast.
  */
 export function broadcastMessage(id, data, exclude) {
@@ -56,9 +55,8 @@ export function broadcastMessage(id, data, exclude) {
 }
 
 /**
- * Handles incoming messages from a player.
- * @param {any} player - The player who sent the message.
- * @param {any} data - The raw data of the incoming message.
+ * @param {any} player 
+ * @param {any} data 
  */
 export function handleMessage(player, data) {
     try {

@@ -10,7 +10,7 @@ import { gameObject } from "./astro-engine/core/gameObject.js";
 import { Sprite } from "./astro-engine/sprites/sprite.js";
 
 const canvas = document.getElementById("canvas");
-const serverUrl = "ws://127.0.0.1:1001";
+const serverUrl = "ws://omarsabry.net/mmosocket";
 
 connect(serverUrl);
 startEngine(canvas);

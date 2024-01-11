@@ -24,10 +24,9 @@ function handleUpgrade(webSocketServer, request, socket, head) {
 }
 
 /**
- * Starts an HTTP server to handle WebSocket upgrades.
- * @param {WebSocketServer} webSocketServer - The WebSocket server instance.
- * @param {number} port - The port on which the HTTP server will listen.
- * @returns - The created HTTP server instance.
+ * @param {WebSocketServer} webSocketServer 
+ * @param {number} port 
+ * @returns 
  */
 export function startHttpServer(webSocketServer, port) {
     const httpServer = createServer({});

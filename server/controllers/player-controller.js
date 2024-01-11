@@ -24,7 +24,7 @@ export function addPlayer(playerData, socket) {
 
 /**
  * Removes a player from the server and their room.
- * @param {Player} player - The player to be removed.
+ * @param {Player} player 
  * @param {string=} code - Closed connection code.
  */
 export function removePlayer(player, code) {
@@ -34,9 +34,8 @@ export function removePlayer(player, code) {
 }
 
 /**
- * Gets the data of a specific player or players.
  * @param {Player|Player[]} player - The player or players to retrieve data for.
- * @returns {Object|Player[]} - The player's data or an array of all players' data.
+ * @returns {Object|Player[]} - The player's data or an array of the specified players' data.
  */
 export function getPlayerData(player) {
     const getData = player => { 
