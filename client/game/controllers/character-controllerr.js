@@ -12,6 +12,6 @@ update(deltaTime => {
             playSpriteAnimation(characterData.idleAnimation);
         }
 
-        gameObject.flipRender = characterData.flip;
+        gameObject.flipHorizontally = characterData.flip;
     });
 });

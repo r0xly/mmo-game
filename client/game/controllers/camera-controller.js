@@ -37,8 +37,8 @@ update(delatTime => {
         else if (character.position.x < leftBound)
             x = character.position.x + moveTolerance; 
 
-        x = clamp(x, (-742.4 + 550) / camera.zoom, (742.4 - 550) / camera.zoom);
         camera.position.x = x;
+
         if (character.position.y > topBound)
             camera.position.y = character.position.y - moveTolerance;
         else if (character.position.y < bottomBound)

@@ -1,5 +1,6 @@
 import { Sprite } from "../sprites/sprite.js";
 import { Vector } from "../util/vector.js";
+import { TextLabel } from "./text-label.js";
 
 
 /**
@@ -8,12 +9,14 @@ import { Vector } from "../util/vector.js";
  * @property {Sprite|string|undefined=} renderOverride
  * @property {Vector} positionPivot
  * @property {Vector} rotationPivot
- * @property {Sprite|string} render
+ * @property {Sprite|string|TextLabel} render
  * @property {number} rotation
  * @property {Vector} position
  * @property {Vector} size
  * @property {number} layer
- * @property {boolean} flipRender
+ * @property {boolean} flipHorizontally
+ * @property {number} alpha
+ * @property {GameObject|undefined} parent
  */
 
 /**
@@ -87,6 +90,11 @@ export function addPosition(gameObject, x ,y) {
 }
 
 export function deleteObject(gameObject) {
+    gameObjects.forEach(object => {
+        if (object.parent === gameObject)
+            deleteObject(object);
+    });
+
     delete gameObjects[gameObjects.indexOf(gameObject)];
 }
 
@@ -97,10 +105,12 @@ export function deleteObject(gameObject) {
  *  size?: number[] | Vector,
  *  positionPivot?: number[] | Vector,
  *  rotationPivot?: number[] | Vector
+ *  alpha?: number,
  *  rotation?: number,
  *  components?: Object[],
- *  render?: string|Sprite,
+ *  render?: string|Sprite|TextLabel,
  *  layer?: number,
+ *  parent?: GameObject,
  * }} properties
  * 
  * @return {GameObject}
@@ -111,10 +121,12 @@ export function gameObject(properties) {
         size: new Vector(100, 100),
         rotationPivot: Vector.Zero,
         position: Vector.Zero,
-        flipRender: false,
+        flipHorizontally: false,
         components: {},
+        parent: undefined,
         render: "rect",
         rotation: 0,
+        alpha: 1,
         layer: 0,
     }
 
