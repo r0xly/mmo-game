@@ -1,20 +1,17 @@
 body {
     display: flex;
     align-items: center;
+    overflow: hidden;
     justify-content: center;
 
     width: 100vw;
     height: 100vh;
     margin: 0;
-
-    background-image: url("./assets/background-pattern.png");
-    background-repeat: repeat;
-    image-rendering: pixelated;
+    background-color: black;
     background-size: 20px;
 }
 
 canvas {
-    background-color: white;
     image-rendering: pixelated;
 }
 
@@ -58,6 +55,7 @@ canvas {
     padding: 10px;
     border-radius: 2px;
     overflow: auto;
+    word-wrap: break-word;
     margin: 0;
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.827);

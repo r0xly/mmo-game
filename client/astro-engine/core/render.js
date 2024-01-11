@@ -1,27 +1,34 @@
 import { update } from "../astro.js";
 import { gameObject, gameObjects } from "./gameObject.js";
 import { Sprite } from "../sprites/sprite.js";
+import { Vector } from "../util/vector.js";
+import { camera } from "./camera.js";
 
-export const trash = 0;
+export let canvasSize = new Vector();
 
 update((deltaTime, canvas, ctx) => {
     const width = canvas.width;
     const height = canvas.height;
 
-    const originX = width / 2;
-    const originY = height / 2;
+
+    const originX = -camera.position.x + width / 2;
+    const originY = camera.position.y + height / 2;
 
     ctx.clearRect(0, 0, width, height)
     ctx.imageSmoothingEnabled = false;
+    // zoom
+    ctx.translate(width / 2, height / 2);
+    ctx.scale(camera.zoom, camera.zoom);
+    ctx.translate(-width / 2, -height / 2);
 
     gameObjects.forEach(object => {
         const objectX = object.position.x;
         const objectY = object.position.y;
         const objectWidth = object.size.x;
         const objectHeight = object.size.y;
-        const pivotOffsetX = object.positionPivot.x * objectWidth;
+        const pivotOffsetX = object.positionPivot.x * objectWidth; 
         const pivotOffsetY = object.positionPivot.y * objectHeight;
-
+        
         ctx.save();
         // rotation
         ctx.translate(originX + objectX,originY - objectY)
@@ -58,5 +65,6 @@ update((deltaTime, canvas, ctx) => {
         }
         ctx.restore();
     });
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
 });

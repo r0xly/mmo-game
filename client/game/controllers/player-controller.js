@@ -1,11 +1,10 @@
 import { update } from "../../astro-engine/astro.js";
+import { camera } from "../../astro-engine/core/camera.js";
 import { addPosition, deleteObject } from "../../astro-engine/core/gameObject.js";
 import { keyDown, keyUp } from "../../astro-engine/core/input.js";
 import { Vector } from "../../astro-engine/util/vector.js";
 import { createCharacter } from "../objects/character.js";
 import { sendMessage } from "./network-controller.js";
-
-const PLAYER_LAYER = 2;
 
 export let walkSpeed = 300;
 export let moveDirection = Vector.Zero;
@@ -16,7 +15,6 @@ export function loadPlayer() {
         deleteObject(character);
 
     character = createCharacter();
-    character.layer = PLAYER_LAYER;
 }
 
 // player movement

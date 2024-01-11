@@ -6,7 +6,7 @@ import { removePlayer } from "./controllers/player-controller.js";
 import "./services/chat-service.js";
 import "./services/movement-service.js"
 
-const serverPort = 1001;
+const serverPort = 54010;
 const webSocketServer = new WebSocketServer({ noServer: true });
 
 webSocketServer.on("connection", (socket, player) => {
