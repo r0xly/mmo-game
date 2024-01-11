@@ -9,6 +9,7 @@ window.onwheel = function(event) {
     console.log(event.deltaY)
 } 
 */
+const clamp = (val, min, max) => Math.min(Math.max(val, min), max)
 
 const moveTolerance = 100;
 
@@ -29,11 +30,15 @@ update(delatTime => {
         const topBound = camera.position.y + moveTolerance;
         const bottomBound = camera.position.y - moveTolerance;
 
-        if (character.position.x > rightBound) 
-            camera.position.x = character.position.x - moveTolerance; 
-        else if (character.position.x < leftBound)
-            camera.position.x = character.position.x + moveTolerance; 
+        let x = camera.position.x;
 
+        if (character.position.x > rightBound) 
+            x = character.position.x - moveTolerance; 
+        else if (character.position.x < leftBound)
+            x = character.position.x + moveTolerance; 
+
+        x = clamp(x, (-742.4 + 550) / camera.zoom, (742.4 - 550) / camera.zoom);
+        camera.position.x = x;
         if (character.position.y > topBound)
             camera.position.y = character.position.y - moveTolerance;
         else if (character.position.y < bottomBound)
