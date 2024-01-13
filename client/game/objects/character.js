@@ -1,4 +1,5 @@
 import { addComponent, gameObject } from "../../astro-engine/core/gameObject.js";
+import { TextLabel } from "../../astro-engine/core/text-label.js";
 import { createSpriteAnimation, playSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 import { characterSprites } from "../sprites/character-sprites.js";
 
@@ -27,7 +28,7 @@ const walkAnimationData = {
     }
 };
 
-class CharacterData {
+class CharacterState {
     moving = false;
     flip = false;
 
@@ -37,14 +38,22 @@ class CharacterData {
     }
 }
 
-export function createCharacter(x = 0, y = 0) {
+export function createCharacter({ x, y, username }) {
     const character = gameObject({
         size: [200, 200],
         position: [x, y],
         render: characterSprites.idle0
     });
 
-    addComponent(character, new CharacterData(character));
+    gameObject({
+        size: [500, 25],
+        position: [0, -90],
+        alpha: 0.5,
+        render: new TextLabel(username, "bold 20px monospace", "black", "center"),
+        parent: character
+    })
+
+    addComponent(character, new CharacterState(character));
 
     return character;
 }

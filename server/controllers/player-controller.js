@@ -1,22 +1,24 @@
 import { Player } from "../entities/player.js";
+import { sendMessage } from "./message-controller.js";
 import { addPlayerToRoom, defaultRoom, removePlayerFromRoom } from "./room-controller.js";
 
 /**
- * A dictionary of player ids and players.
  * @type {{[playerId: string]: Player}}
  */
 export const players = {};
 
 /**
- * Adds a new player to the server and assigns them to a room.
- * @param {Object} playerData - Data for initializing the player.
- * @param {WebSocket} socket - The WebSocket connection associated with the player.
- * @returns {Player} - The player object.
+ * @param {Object} playerData 
+ * @param {WebSocket} socket 
+ * @returns {Player} 
  */
 export function addPlayer(playerData, socket) {
     const player = new Player(playerData, socket);
     players[player.id] = player;
 
+    sendMessage("ConnectionData", {
+        playerData: getPlayerData(player)
+    }, player);
     addPlayerToRoom(player, defaultRoom);
 
     return player;

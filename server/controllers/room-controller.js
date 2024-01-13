@@ -2,7 +2,10 @@ import { Room } from "../entities/room.js";
 import { messageReciever, sendMessage } from "./message-controller.js";
 import { getPlayerData, players } from "./player-controller.js";
 
-const roomA = new Room("a");
+const roomA = new Room("a", {
+    backgroundUrl: "https://www.omarsabry.net/mmo-game/assets/sample-map.png",
+    size: { x: 2784, y: 1344 }
+});
 const roomB = new Room("b");
 
 export const defaultRoom = roomA;
@@ -29,7 +32,7 @@ export function addPlayerToRoom(player, room) {
     sendMessage("PlayerJoinedRoom", getPlayerData(player), room.players);
     sendMessage("RoomData", {
         players: getPlayerData(room.players),
-        roomData: room.data,
+        data: room.data,
         roomId: room.id,
     }, player);
 

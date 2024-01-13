@@ -22,7 +22,7 @@ export class Vector {
 
     sub(x = 0, y = 0) {
         if (typeof(x) === "object") 
-            return new Vector(this.x - x.x, this.y - y.y);
+            return new Vector(this.x - x.x, this.y - x.y);
 
         return new Vector(this.x - x, this.y - y);
     }

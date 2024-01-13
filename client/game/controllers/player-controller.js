@@ -1,23 +1,25 @@
 import { update } from "../../astro-engine/astro.js";
 import { camera } from "../../astro-engine/core/camera.js";
-import { addPosition, deleteObject } from "../../astro-engine/core/gameObject.js";
+import { addPosition, deleteObject, gameObject } from "../../astro-engine/core/gameObject.js";
 import { keyDown, keyUp } from "../../astro-engine/core/input.js";
+import { playSpriteAnimation, stopSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 import { Vector } from "../../astro-engine/util/vector.js";
 import { createCharacter } from "../objects/character.js";
-import { sendMessage } from "./network-controller.js";
+import { messageRecieved, sendMessage } from "./network-controller.js";
 
 export let walkSpeed = 300;
 export let moveDirection = Vector.Zero;
 export let character;
+export let playerData;
 
 export function loadPlayer() {
+    console.log(playerData);
     if (character)
         deleteObject(character);
 
-    character = createCharacter();
+    character = createCharacter(playerData);
 }
 
-// player movement
 
 keyDown(key => {
     moveDirection.x = key === "a" ? -1 : key === "d" ? 1 : moveDirection.x;
@@ -30,22 +32,32 @@ keyUp(key => {
 });
 
 update(deltaTime => {
-    const characterData = character.components["CharacterData"];
+    if (!character)
+        return;
+
+    const characterData = character.components["CharacterState"];
+    playSpriteAnimation(characterData.moving ? characterData.walkAnimation : characterData.idleAnimation);
+    stopSpriteAnimation(characterData.moving ? characterData.idleAnimation : characterData.walkAnimation);
 
     sendMessage("CharacterState", {
         flip: characterData.flip,
         moving: characterData.moving
     });
 
-    if (!character || moveDirection.magnitude === 0)
+    if (moveDirection.magnitude === 0)
         return characterData.moving = false;
-
+    
     characterData.moving = true;
     characterData.flip = moveDirection.x < 0;
+    character.flipHorizontally = characterData.flip;
     
     addPosition(character, moveDirection.unit.mul(walkSpeed * deltaTime));
     sendMessage("Move", { 
         x: character.position.x, 
         y: character.position.y 
     });
+});
+
+messageRecieved("ConnectionData", data  => {
+    playerData = data.playerData;
 });

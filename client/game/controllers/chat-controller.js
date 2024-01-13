@@ -18,10 +18,10 @@ export function announceChatMessage(content) {
 
 let previousSender; 
 
-export function sendChatMessage({ username, content }) {
+export function sendChatMessage({ content, player }) {
     const usernameElement = document.createElement("span");
     usernameElement.style.color = USERNAME_COLOR;
-    usernameElement.innerHTML = username + ": ";
+    usernameElement.innerHTML = player.username + ": ";
     usernameElement.style.fontWeight = "bold";
 
     const message = document.createElement("p");
@@ -29,10 +29,10 @@ export function sendChatMessage({ username, content }) {
     
     chat.prepend(message);
     
-    if (previousSender !== username)
+    if (previousSender !== player.username)
         message.prepend(usernameElement);
 
-    previousSender = username;
+    previousSender = player.username;
 }
 
 chatInput.onkeydown = event => {

@@ -1,5 +1,4 @@
 /**
- * Logs a message on the server.
  * @param {string} message 
  */
 export function log(message) {
@@ -7,7 +6,6 @@ export function log(message) {
 }
 
 /**
- * Logs an error on the server.
  * @param {string} message 
  */
 export function error(message) {

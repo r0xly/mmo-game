@@ -9,9 +9,9 @@ window.onwheel = function(event) {
     console.log(event.deltaY)
 } 
 */
-const clamp = (val, min, max) => Math.min(Math.max(val, min), max)
 
-const moveTolerance = 100;
+
+const cameraMoveTolerance = 100;
 
 keyDown(key => {
     if (key === "i") {
@@ -24,24 +24,38 @@ keyDown(key => {
 
 
 update(delatTime => {
-    if (character) {
-        const leftBound = camera.position.x - moveTolerance;
-        const rightBound = camera.position.x + moveTolerance;
-        const topBound = camera.position.y + moveTolerance;
-        const bottomBound = camera.position.y - moveTolerance;
+    if (!character)
+        return;
 
-        let x = camera.position.x;
+    
+    /** looks weird because camera if off center
+    (reimplement when character sprite updated)
+    const directionFromCenter = character.position.sub(camera.position).unit;
+    const distanceFromCenter = Math.floor(character.position.sub(camera.position).magnitude);
 
-        if (character.position.x > rightBound) 
-            x = character.position.x - moveTolerance; 
-        else if (character.position.x < leftBound)
-            x = character.position.x + moveTolerance; 
-
-        camera.position.x = x;
-
-        if (character.position.y > topBound)
-            camera.position.y = character.position.y - moveTolerance;
-        else if (character.position.y < bottomBound)
-            camera.position.y = character.position.y + moveTolerance;
+    if (distanceFromCenter > cameraMoveTolerance) {
+        camera.position.x = character.position.x - (directionFromCenter.x * cameraMoveTolerance)
+        camera.position.y = character.position.y - (directionFromCenter.y * cameraMoveTolerance)
     }
+    */
+
+    const leftBound = camera.position.x - cameraMoveTolerance;
+    const rightBound = camera.position.x + cameraMoveTolerance;
+    const topBound = camera.position.y + cameraMoveTolerance;
+    const bottomBound = camera.position.y - cameraMoveTolerance;
+
+    let x = camera.position.x;
+
+    if (character.position.x > rightBound)
+        x = character.position.x - cameraMoveTolerance;
+    else if (character.position.x < leftBound)
+        x = character.position.x + cameraMoveTolerance;
+
+    camera.position.x = x;
+
+    if (character.position.y > topBound)
+        camera.position.y = character.position.y - cameraMoveTolerance;
+    else if (character.position.y < bottomBound)
+        camera.position.y = character.position.y + cameraMoveTolerance;
+
 });

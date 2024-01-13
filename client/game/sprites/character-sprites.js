@@ -1,6 +1,6 @@
 import { SpriteSheet } from "../../astro-engine/sprites/spriteSheet.js";
 
-export const characterSpriteSheet = new SpriteSheet("../assets/player.png", 48, 48);
+export const characterSpriteSheet = new SpriteSheet("https://www.omarsabry.net/mmo-game/assets/player.png", 48, 48);
 
 export const characterSprites = {
     idle0: characterSpriteSheet.getSprite(0, 1),

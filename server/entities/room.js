@@ -5,6 +5,6 @@ export class Room {
 
     constructor(roomId, roomData) {
         this.id = roomId;
-        this.data= roomData;
+        this.data = roomData;
     }
 }

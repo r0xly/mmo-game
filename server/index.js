@@ -1,8 +1,8 @@
 import { WebSocketServer } from "ws";
 import { error } from "./util/log.js";
 import { startHttpServer } from "./controllers/http-server-controller.js";
-import { handleMessage } from "./controllers/message-controller.js";
-import { removePlayer } from "./controllers/player-controller.js";
+import { handleMessage, sendMessage } from "./controllers/message-controller.js";
+import { getPlayerData, removePlayer } from "./controllers/player-controller.js";
 import "./services/chat-service.js";
 import "./services/movement-service.js"
 
