@@ -60,8 +60,10 @@ export function getComponent(gameObject, ...componentIds) {
     for (const id of componentIds) {
         let component = gameObject.components[id];
         
-        if (component) 
+        if (component)  {
             components.push(component);
+
+        }
     }
 
     return components.length === componentIds.length ? components : undefined;

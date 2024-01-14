@@ -3,6 +3,7 @@ body {
     align-items: center;
     overflow: hidden;
     justify-content: center;
+    font-family: monospace;
 
     width: 100vw;
     height: 100vh;
@@ -37,8 +38,7 @@ canvas {
     
     background-color: rgba(0, 0, 0, 0);
     border-radius: 3px;
-
-    margin: 20px;
+margin: 20px;
     bottom: 0;
     right: 0;
 }
@@ -62,7 +62,8 @@ canvas {
     border: solid 2px #202020;
 }
 
-.chat p, span {
+.chat p,
+span {
     margin: 0;
     font-family: monospace;
     size: 3rem;
@@ -86,4 +87,36 @@ canvas {
 
 .chat-window input:focus {
     border: solid 2px #6ca5ff;
+}
+
+.loading-screen {
+    position: absolute;
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #040204;
+    color: white;
+    font-size: 25px;
+
+    z-index: 100;
+}
+
+.loading-screen img {
+    width: 300px;
+    image-rendering: pixelated;
+    pointer-events: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }

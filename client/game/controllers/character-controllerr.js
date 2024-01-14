@@ -1,14 +1,6 @@
-import { update } from "../../astro-engine/astro.js";
-import { getComponent, queryObjects } from "../../astro-engine/core/gameObject.js";
 import { playSpriteAnimation, stopSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 import { messageRecieved } from "./network-controller.js";
 import { characters } from "./room-controller.js";
-
-update(deltaTime => {
-    queryObjects("CharacterState").forEach(([gameObject, characterData]) => {
-        gameObject.flipHorizontally = characterData.flip;
-    });
-});
 
 messageRecieved("Move", ({ id, x, y }) => {
     if (!characters[id])

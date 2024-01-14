@@ -35,6 +35,7 @@ update(deltaTime => {
     if (!character)
         return;
 
+        console.log(character.position);
     const characterData = character.components["CharacterState"];
     playSpriteAnimation(characterData.moving ? characterData.walkAnimation : characterData.idleAnimation);
     stopSpriteAnimation(characterData.moving ? characterData.idleAnimation : characterData.walkAnimation);

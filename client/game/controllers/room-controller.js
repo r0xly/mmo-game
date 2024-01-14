@@ -1,8 +1,12 @@
 import { deleteObject, gameObject } from "../../astro-engine/core/gameObject.js";
 import { Sprite } from "../../astro-engine/sprites/sprite.js";
+import { HitBox } from "../../astro-engine/core/hit-box.js";
 import { createCharacter } from "../objects/character.js";
-import { messageRecieved } from "./network-controller.js";
-import { loadPlayer } from "./player-controller.js";
+import { disableLoadingScreen, enableLoadingScreen } from "./loading-controller.js";
+import { messageRecieved, sendMessage } from "./network-controller.js";
+import { character, loadPlayer } from "./player-controller.js";
+
+
 
 export let players = {};
 export let characters = {};
@@ -29,26 +33,68 @@ function removePlayer({ id }) {
 }
 
 function loadRoom({ roomId, data, players }) {
+    enableLoadingScreen("loading room...");
     clearRoom();
 
     const backgroundSprite = new Sprite(data.backgroundUrl);
 
-    backgroundSprite.image.onload = () =>
-        createRoomObject({
-            size: [data.size.x, data.size.y],
-            render: backgroundSprite,
-            layer: -1,
-        });
+    createRoomObject({
+        size: [data.size.x, data.size.y],
+        render: backgroundSprite,
+        layer: -1,
+    });
 
+    if (roomId === "spawn")
+        createRoomObject({
+            size: [120, 70],
+            alpha: 0,
+            position: [0, 530],
+            components: [new HitBox((hit) => {
+                console.log(hit);
+                if (hit == character) {
+                    sendMessage("JoinRoomRequest", "main")
+                }
+            })],
+        })
+    if (roomId === "cave")
+        createRoomObject({
+            size: [120, 70],
+            position: [322, 171],
+            alpha: 0,
+            components: [new HitBox((hit) => {
+                console.log(hit);
+                if (hit == character) {
+                    sendMessage("JoinRoomRequest", "main")
+                }
+            })],
+        })
+    if (roomId === "main")
+        createRoomObject({
+            size: [120, 70],
+            position: [677, 400],
+            alpha: 0,
+            components: [new HitBox((hit) => {
+                console.log(hit);
+                if (hit == character) {
+                    sendMessage("JoinRoomRequest", "cave")
+                }
+            })],
+        })
+    if (roomId === "main")
+        createRoomObject({
+            size: [120, 70],
+            position: [-657, 580],
+            alpha: 0,
+            components: [new HitBox((hit) => {
+                console.log(hit);
+                if (hit == character) {
+                    sendMessage("JoinRoomRequest", "spawn")
+                }
+            })],
+        })
     players.forEach(addPlayer);
     loadPlayer();
-        let xx = gameObject({
-            size: [data.size.x, data.size.y],
-            render: backgroundSprite,
-            layer: -1,
-        });
-
-        console.log(xx.render)
+    setTimeout(disableLoadingScreen, 200);
 }
 
 messageRecieved("PlayerJoinedRoom", addPlayer);
