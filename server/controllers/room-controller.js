@@ -5,16 +5,19 @@ import { getPlayerData, players } from "./player-controller.js";
 
 const spawn = new Room("spawn", {
     backgroundUrl: "https://www.omarsabry.net/mmo-game/assets/spawn.png",
+    backgroundColor: "#53a03b",
     size: { x: 3840 / 1.75 , y: 3840 / 1.75 }
 });
 
 const main = new Room("main", {
     backgroundUrl: "https://www.omarsabry.net/mmo-game/assets/main.png",
+    backgroundColor: "#53a03b",
     size: { x: 4800 / 1.75, y: 2880 / 1.75 }
 })
 
 const cave = new Room("cave", {
     backgroundUrl: "https://www.omarsabry.net/mmo-game/assets/cave.png",
+    backgroundColor: "black",
     size: { x: 2400 / 1.5, y: 1920 / 1.5 }
 })
 

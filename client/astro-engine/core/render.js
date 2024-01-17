@@ -5,6 +5,13 @@ import { camera } from "./camera.js";
 import { gameObjects } from "./gameObject.js";
 import { TextLabel } from "./text-label.js";
 
+let backgroundColor;
+
+export function setBackgroundColor(color) {
+    backgroundColor = color;
+}
+
+
 const getFontLineHeight = (ctx) => {
     const { actualBoundingBoxAscent, actualBoundingBoxDescent } = ctx.measureText('abcdefghijklmnopqrstuvwxyz');
     return actualBoundingBoxAscent + actualBoundingBoxDescent + 4;
@@ -45,8 +52,8 @@ function renderTextLabel(ctx, position, size, textLabel){
 
 }
 
-function renderRect(ctx, position, size) {
-    ctx.fillStyle = "white"
+function renderRect(ctx, position, size, color="white") {
+    ctx.fillStyle = color,
     ctx.fillRect(
         position.x,
         position.y,
@@ -77,6 +84,9 @@ update((deltaTime, canvas, ctx) => {
     ctx.clearRect(0, 0, width, height)
     ctx.translate(width / 2, height / 2);
     ctx.scale(camera.zoom, camera.zoom);
+
+    if (backgroundColor)
+        renderRect(ctx, Vector.Zero, new Vector(width, height), backgroundColor) 
 
     for (const object of gameObjects) {
         if (object === undefined) 

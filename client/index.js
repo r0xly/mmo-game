@@ -15,7 +15,7 @@ import { enableLoadingScreen } from "./game/controllers/loading-controller.js";
 
 const canvas = document.getElementById("canvas");
 const serverUrl = "wss://omarsabry.net/mmosocket";
-//const serverUrl = "ws://localhost:54010";
+//const serverUrl = "ws://localhost:010";
 
 connect(serverUrl);
 startEngine(canvas);

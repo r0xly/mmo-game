@@ -5,6 +5,7 @@ import { createCharacter } from "../objects/character.js";
 import { disableLoadingScreen, enableLoadingScreen } from "./loading-controller.js";
 import { messageRecieved, sendMessage } from "./network-controller.js";
 import { character, loadPlayer } from "./player-controller.js";
+import { setBackgroundColor } from "../../astro-engine/core/render.js";
 
 
 
@@ -35,7 +36,8 @@ function removePlayer({ id }) {
 function loadRoom({ roomId, data, players }) {
     enableLoadingScreen("loading room...");
     clearRoom();
-
+    
+    setBackgroundColor(data.backgroundColor);
     const backgroundSprite = new Sprite(data.backgroundUrl);
 
     createRoomObject({
@@ -44,6 +46,7 @@ function loadRoom({ roomId, data, players }) {
         layer: -1,
     });
 
+    
     if (roomId === "spawn")
         createRoomObject({
             size: [120, 70],
