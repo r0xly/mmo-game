@@ -74,6 +74,17 @@ export function stopSpriteAnimation(...spriteAnimation) {
     });
 }
 
+function isHighestPriority(spriteAnimation, gameObject) {
+    let priority = spriteAnimation.priority;
+
+    for (const animation of spriteAnimations)
+        if (animation.gameObjects.includes(gameObject) && animation.priority > priority && animation.playing)
+            return false;
+    return true;
+
+}
+
+
 /**
  * @param {SpriteAnimation} animation 
  */
@@ -83,6 +94,8 @@ function resetSpriteAnimation(animation) {
     animation.currentTimestampIndex = 0;
     
     animation.gameObjects.forEach(gameObject => {
+        if (!isHighestPriority(animation, gameObject))
+            return;
         gameObject.renderOverride = undefined;
     });
 }
@@ -92,9 +105,12 @@ function resetSpriteAnimation(animation) {
  */
 function updateSpriteAnimationFrame(animation) {
     animation.currentTimestampIndex++;
-    animation.gameObjects.forEach(gameObject => 
+    animation.gameObjects.forEach(gameObject =>  {
+        if (!isHighestPriority(animation, gameObject))
+            return;
+
         gameObject.renderOverride = animation.keyFrames[animation.timestamps[animation.currentTimestampIndex]]
-    );
+    });
 }
 
 /**

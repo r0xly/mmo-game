@@ -2,7 +2,7 @@ import { deleteObject, gameObject } from "../../astro-engine/core/gameObject.js"
 import { Sprite } from "../../astro-engine/sprites/sprite.js";
 import { HitBox } from "../../astro-engine/core/hit-box.js";
 import { createCharacter } from "../objects/character.js";
-import { disableLoadingScreen, enableLoadingScreen } from "./loading-controller.js";
+import { disableLoadingScreen, enableLoadingScreen, fadeIn, fadeOut } from "./transition-controller.js";
 import { messageRecieved, sendMessage } from "./network-controller.js";
 import { character, loadPlayer } from "./player-controller.js";
 import { setBackgroundColor } from "../../astro-engine/core/render.js";
@@ -13,6 +13,7 @@ export let players = {};
 export let characters = {};
 
 let roomObjects = [];
+let firstRoom = true;
 
 const createRoomObject = (data) => roomObjects.push(gameObject(data));
 
@@ -34,9 +35,15 @@ function removePlayer({ id }) {
 }
 
 function loadRoom({ roomId, data, players }) {
-    enableLoadingScreen("loading room...");
-    clearRoom();
+    if (firstRoom)
+        disableLoadingScreen();
+    else 
+        fadeIn();
+    firstRoom = false;
     
+    
+    setTimeout(() => {    
+    clearRoom();
     setBackgroundColor(data.backgroundColor);
     const backgroundSprite = new Sprite(data.backgroundUrl);
 
@@ -96,8 +103,9 @@ function loadRoom({ roomId, data, players }) {
             })],
         })
     players.forEach(addPlayer);
+    setTimeout(fadeOut, 1000 / 4);
     loadPlayer();
-    setTimeout(disableLoadingScreen, 200);
+    }, 1000 / 4);
 }
 
 messageRecieved("PlayerJoinedRoom", addPlayer);

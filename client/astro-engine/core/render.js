@@ -81,12 +81,12 @@ update((deltaTime, canvas, ctx) => {
     const height = canvas.height;
 
     ctx.imageSmoothingEnabled = false;
-    ctx.clearRect(0, 0, width, height)
+    ctx.fillStyle = backgroundColor;
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillRect(0, 0, width, height);
     ctx.translate(width / 2, height / 2);
     ctx.scale(camera.zoom, camera.zoom);
 
-    if (backgroundColor)
-        renderRect(ctx, Vector.Zero, new Vector(width, height), backgroundColor) 
 
     for (const object of gameObjects) {
         if (object === undefined) 

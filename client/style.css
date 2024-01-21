@@ -120,3 +120,24 @@ span {
     -webkit-user-select: none;
     user-select: none;
 }
+
+.black-screen {
+    opacity: 1;
+    transition: opacity 0.25s ease-in-out;
+    
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: black;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.black-screen.hidden {
+    opacity: 0;
+}

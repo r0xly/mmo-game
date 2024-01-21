@@ -1,10 +1,12 @@
 import { addComponent, gameObject } from "../../astro-engine/core/gameObject.js";
+import { keyDown, mouseDown } from "../../astro-engine/core/input.js";
 import { TextLabel } from "../../astro-engine/core/text-label.js";
 import { createSpriteAnimation, playSpriteAnimation } from "../../astro-engine/sprites/sprite-animation.js";
 import { characterSprites } from "../sprites/character-sprites.js";
 
 const idleAnimationData = {
     loop: true,
+    playOnCreation: true,
     playbackSpeed: 0.2,
     timeLength:0.2,
     keyFrames: {
@@ -28,13 +30,24 @@ const walkAnimationData = {
     }
 };
 
+const swingAnimationData = {
+    timeLength: 0.4,
+    priority: 100,
+    keyFrames: {
+        [0]: characterSprites.swing0,
+        [0.1]: characterSprites.swing1,
+        [0.2]: characterSprites.swing2,
+        [0.3]: characterSprites.swing3
+    }
+}
+
 class CharacterState {
     moving = false;
     flip = false;
 
     constructor(gameObject) {
         this.walkAnimation = createSpriteAnimation(walkAnimationData, gameObject);
-        this.idleAnimation = createSpriteAnimation(idleAnimationData, gameObject);
+        this.swingAnimation = createSpriteAnimation(swingAnimationData, gameObject);
     }
 }
 
@@ -54,6 +67,12 @@ export function createCharacter({ x, y, username }) {
     })
 
     addComponent(character, new CharacterState(character));
+createSpriteAnimation(idleAnimationData, character);
+    const swing = createSpriteAnimation(swingAnimationData, character);
+
+    mouseDown(() => {
+        playSpriteAnimation(swing);
+    })
 
     return character;
 }

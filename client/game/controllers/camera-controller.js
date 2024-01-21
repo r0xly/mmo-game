@@ -4,11 +4,13 @@ import { gameObject } from "../../astro-engine/core/gameObject.js";
 import { keyDown } from "../../astro-engine/core/input.js"
 import { character } from "./player-controller.js";
 
-/** 
 window.onwheel = function(event) {
-    console.log(event.deltaY)
+    if (event.deltaY > 0)
+        camera.zoom /= 1.25;
+    else 
+        camera.zoom *= 1.25;
+
 } 
-*/
 
 
 const cameraMoveTolerance = 100;

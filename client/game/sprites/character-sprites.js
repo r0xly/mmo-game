@@ -21,4 +21,5 @@ export const characterSprites = {
     swing1: characterSpriteSheet.getSprite(1, 7),
     swing2: characterSpriteSheet.getSprite(2, 7),
     swing3: characterSpriteSheet.getSprite(3, 7)
+
 }

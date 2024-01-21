@@ -4,6 +4,16 @@ export let keysDown = {};
 
 export const [keyUp, emitKeyUp] = createEvent();
 export const [keyDown, emitKeyDown] = createEvent();
+export const [mouseUp, emitMouseUp] = createEvent();
+export const [mouseDown, emitMouseDown] = createEvent();
+
+window.onmousedown = event => {
+    emitMouseDown();
+}
+
+window.onmouseup = event => {
+    emitMouseUp();
+}
 
 window.onkeyup = event => {
     const key = event.key.toLocaleLowerCase();

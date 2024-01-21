@@ -18,8 +18,7 @@ messageRecieved("CharacterState", ({ id, flip, moving }) => {
 
     const characterState = character.components["CharacterState"];
 
-    playSpriteAnimation(moving ? characterState.walkAnimation : characterState.idleAnimation);
-    stopSpriteAnimation(moving ? characterState.idleAnimation : characterState.walkAnimation);
+    (moving ? playSpriteAnimation : stopSpriteAnimation)(characterState.walkAnimation);
     character.flipHorizontally = flip;
 
 });
